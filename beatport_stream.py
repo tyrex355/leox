@@ -118,16 +118,17 @@ class BeatportStream:
 
                 # Convert raw AAC to M4A using ffmpeg
                 stream = (
-                    ffmpeg
-                    .input(temp_aac)
-                    .output(
-                        output_file,
-                        acodec='copy',
-                        f='ipod',
-                        brand='M4A ',
-                        movflags='+faststart'
-                    )
-                )
+    ffmpeg
+    .input(temp_aac)
+    .output(
+        output_file,
+        acodec='aac',  # Re-encode using the AAC codec
+        audio_bitrate='256k',  # Specify desired bitrate, e.g., 256 kbps
+        f='ipod',
+        brand='M4A ',
+        movflags='+faststart'
+    )
+)
                 ffmpeg.run(stream, capture_stdout=True, capture_stderr=True, overwrite_output=True)
                 
             finally:
